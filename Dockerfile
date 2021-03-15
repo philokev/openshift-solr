@@ -4,7 +4,6 @@ LABEL maintainer="emiliano.sune@gmail.com"
 
 USER root
 ENV STI_SCRIPTS_PATH=/usr/libexec/s2i
-ENV SOLR_HOME=/opt/solr/server/solr
 
 LABEL io.k8s.description="Run SOLR search in OpenShift" \
       io.k8s.display-name="SOLR 8.8.1" \
@@ -27,5 +26,10 @@ RUN chgrp -R 0 /opt/solr \
 RUN chgrp -R 0 /opt/docker-solr \
   && chmod -R g+rwX /opt/docker-solr \
   && chown -LR solr:root /opt/docker-solr
+
+# - In order to drop the root user, we have to make some directories writable
+#   to the root group as OpenShift default security model is to run the container
+#   under random UID.
+RUN usermod -a -G 0 solr
 
 USER 8983
