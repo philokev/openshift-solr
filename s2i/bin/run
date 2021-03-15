@@ -9,9 +9,7 @@ if [ -z "${CORE_NAME}" ]; then
   CORE_NAME=autocore
 fi
 
-if [ -z "${SOLR_CONF_DIR}" ]; then
-  SOLR_CONF_DIR="/opt/solr/server/solr/configsets"
-fi
+SOLR_CONF_DIR="${SOLR_CONF_DIR:-/opt/solr/server/solr/configsets}"
 
 if [ -z "${CONF_DIR}" ]; then
   CONF_DIR="${SOLR_CONF_DIR}/${CORE_NAME}"
