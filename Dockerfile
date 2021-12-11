@@ -5,6 +5,18 @@ LABEL maintainer="emiliano.sune@gmail.com"
 USER root
 ENV STI_SCRIPTS_PATH=/usr/libexec/s2i
 
+# ===============================================================================================
+# Mitigation for CVE-2021-44228
+#
+# Upgrade to solr 8.11.1 or greater when availble.
+#
+# References:
+#   - https://logging.apache.org/log4j/2.x/security.html
+#   - https://solr.apache.org/security.html#apache-solr-affected-by-apache-log4j-cve-2021-44228
+# -----------------------------------------------------------------------------------------------
+ENV LOG4J_FORMAT_MSG_NO_LOOKUPS=true
+# ===============================================================================================
+
 LABEL io.k8s.description="Run SOLR search in OpenShift" \
       io.k8s.display-name="SOLR 8.8.1" \
       io.openshift.expose-services="8983:http" \
